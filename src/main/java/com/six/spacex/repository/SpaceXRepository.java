@@ -8,18 +8,44 @@ public class SpaceXRepository {
     private final Map<String, Mission> missions = new HashMap<>();
 
     public void addRocket(String name) {
-        rockets.put(name, new Rocket(name));
+        rockets.putIfAbsent(name, new Rocket(name));
     }
 
     public void addMission(String name) {
-        missions.put(name, new Mission(name));
+        missions.putIfAbsent(name, new Mission(name));
     }
 
     public Rocket getRocket(String name) {
-        return rockets.get(name);
+        Rocket rocket = rockets.get(name);
+        if (rocket == null) {
+            throw new IllegalArgumentException("Rocket not found: " + name);
+        }
+        return rocket;
     }
 
     public Mission getMission(String name) {
-        return missions.get(name);
+        Mission mission = missions.get(name);
+        if (mission == null) {
+            throw new IllegalArgumentException("Mission not found: " + name);
+        }
+        return mission;
+    }
+
+    public void assignRocketToMission(String rocketName, String missionName) {
+        Rocket rocket = getRocket(rocketName);
+        Mission mission = getMission(missionName);
+        mission.addRocket(rocket);
+    }
+
+    public List<Mission> getMissionSummary() {
+        List<Mission> list = new ArrayList<>(missions.values());
+
+        list.sort((a, b) -> {
+            int diff = b.getAssignedRockets().size() - a.getAssignedRockets().size();
+            if (diff != 0) return diff;
+            return b.getName().compareToIgnoreCase(a.getName());
+        });
+
+        return list;
     }
 }
