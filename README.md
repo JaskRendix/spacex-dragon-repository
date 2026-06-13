@@ -14,6 +14,7 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - [x] Project skeleton
 - [x] Domain models (Rocket, Mission, Status enums)
 - [x] Repository logic
+- [x] CI/CD Workflow
 - [ ] Unit tests
 - [ ] Summary reporting
 
