@@ -23,21 +23,46 @@ public class Mission {
         return status;
     }
 
-    public void setStatus(MissionStatus status) {
-        this.status = status;
-    }
-
     public List<Rocket> getAssignedRockets() {
         return Collections.unmodifiableList(assignedRockets);
     }
 
     public void addRocket(Rocket rocket) {
-        assignedRockets.add(rocket);
-
-        if (rocket.getStatus() == RocketStatus.IN_REPAIR) {
-            this.status = MissionStatus.PENDING;
-        } else {
-            this.status = MissionStatus.IN_PROGRESS;
+        if (status == MissionStatus.ENDED) {
+            throw new IllegalStateException("Mission already ended");
         }
+
+        if (rocket.getStatus() != RocketStatus.ON_GROUND) {
+            throw new IllegalStateException("Rocket already assigned to a mission");
+        }
+
+        assignedRockets.add(rocket);
+        rocket.setStatus(RocketStatus.IN_SPACE);
+
+        updateStatus();
+    }
+
+    private void updateStatus() {
+        if (assignedRockets.isEmpty()) {
+            status = MissionStatus.SCHEDULED;
+            return;
+        }
+
+        boolean anyInRepair = assignedRockets.stream()
+                .anyMatch(r -> r.getStatus() == RocketStatus.IN_REPAIR);
+
+        if (anyInRepair) {
+            status = MissionStatus.PENDING;
+        } else {
+            status = MissionStatus.IN_PROGRESS;
+        }
+    }
+
+    public void setStatus(MissionStatus status) {
+        if (status == MissionStatus.ENDED) {
+            this.status = MissionStatus.ENDED;
+            return;
+        }
+        throw new IllegalStateException("Mission status can only be ended manually");
     }
 }
