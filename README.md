@@ -16,7 +16,7 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - [x] Repository logic
 - [x] CI/CD Workflow
 - [x] Unit tests
-- [ ] Summary reporting
+- [x] Summary reporting
 
 ## Assumptions & Design Choices
 - Rocket names are unique — they're the IDs.
@@ -28,10 +28,19 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 ## Verified Behaviors (via tests)
 - Rejects assigning a rocket that's already tied to a mission.  
 - Mission status reacts to the state of its rockets (`IN_PROGRESS`, `PENDING`).  
+- Mission status is based on each rocket's status at assignment time, not its later state.  
 - `ENDED` missions block new assignments.  
 - Duplicate rocket names are rejected.  
 - Lookups for unknown rockets or missions fail fast.  
 - Summary ordering is stable and covered by tests.
+
+## Summary Reporting
+The repository can produce a mission summary ordered by:
+1. Number of assigned rockets (descending)
+2. Mission name numeric suffix (descending), e.g. X10 > X2
+3. Fallback to lexicographical order when names aren't numeric
+
+This gives a stable, predictable overview of mission load.
 
 ---
 
