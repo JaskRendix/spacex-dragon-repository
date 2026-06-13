@@ -11,9 +11,9 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - **AI usage** — I use an LLM as a second pair of eyes for structure and test ideas. I make the calls, write the code, and keep it within the rules.
 
 ## Current Status
-- [ ] Project skeleton
-- [ ] Domain models (Rocket, Mission, Status enums)
-- [ ] Repository logic
+- [x] Project skeleton
+- [x] Domain models (Rocket, Mission, Status enums)
+- [x] Repository logic
 - [ ] Unit tests
 - [ ] Summary reporting
 
