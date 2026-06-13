@@ -18,8 +18,12 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - [ ] Unit tests
 - [ ] Summary reporting
 
-## Assumptions
-Will fill this in as things get real.
+## Assumptions & Design Choices
+- Rocket names are unique — they're the IDs.
+- Mission names are unique — same deal.
+- A rocket can't join a mission if it's already marked `IN_SPACE`.
+- Once a mission hits `ENDED`, it's locked. No more assignments.
+- Everything lives in memory. Restart the app, start fresh.
 
 ---
 
