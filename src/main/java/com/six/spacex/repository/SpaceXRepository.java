@@ -34,7 +34,13 @@ public class SpaceXRepository {
     public void assignRocketToMission(String rocketName, String missionName) {
         Rocket rocket = getRocket(rocketName);
         Mission mission = getMission(missionName);
+    
+        if (rocket.getStatus() == RocketStatus.IN_SPACE) {
+            throw new IllegalStateException("Rocket " + rocketName + " is already assigned to a mission.");
+        }
+    
         mission.addRocket(rocket);
+        rocket.setStatus(RocketStatus.IN_SPACE);
     }
 
     public List<Mission> getMissionSummary() {
