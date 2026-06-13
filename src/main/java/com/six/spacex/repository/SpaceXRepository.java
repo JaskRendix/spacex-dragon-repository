@@ -57,8 +57,8 @@ public class SpaceXRepository {
             throw new IllegalStateException("Mission " + missionName + " has ended and cannot accept new rockets.");
         }
 
-        rocket.setStatus(RocketStatus.IN_SPACE);
         mission.addRocket(rocket);
+        rocket.setStatus(RocketStatus.IN_SPACE);
     }
 
     public List<Mission> getMissionSummary() {
