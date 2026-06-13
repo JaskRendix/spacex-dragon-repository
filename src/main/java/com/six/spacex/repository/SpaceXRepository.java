@@ -59,7 +59,6 @@ public class SpaceXRepository {
 
         rocket.setStatus(RocketStatus.IN_SPACE);
         mission.addRocket(rocket);
-        mission.updateStatus();
     }
 
     public List<Mission> getMissionSummary() {
