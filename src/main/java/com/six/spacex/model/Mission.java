@@ -31,17 +31,13 @@ public class Mission {
         if (status == MissionStatus.ENDED) {
             throw new IllegalStateException("Mission already ended");
         }
-    
+
         if (rocket.getStatus() == RocketStatus.IN_SPACE) {
             throw new IllegalStateException("Rocket already assigned to a mission");
         }
-    
+
         assignedRockets.add(rocket);
-    
-        if (rocket.getStatus() == RocketStatus.ON_GROUND) {
-            rocket.setStatus(RocketStatus.IN_SPACE);
-        }
-    
+
         updateStatus();
     }
 
@@ -54,11 +50,7 @@ public class Mission {
         boolean anyInRepair = assignedRockets.stream()
                 .anyMatch(r -> r.getStatus() == RocketStatus.IN_REPAIR);
 
-        if (anyInRepair) {
-            status = MissionStatus.PENDING;
-        } else {
-            status = MissionStatus.IN_PROGRESS;
-        }
+        status = anyInRepair ? MissionStatus.PENDING : MissionStatus.IN_PROGRESS;
     }
 
     public void setStatus(MissionStatus status) {
