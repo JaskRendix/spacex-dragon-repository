@@ -8,11 +8,13 @@ public class Mission {
     private final String name;
     private MissionStatus status;
     private final List<Rocket> assignedRockets;
+    private final List<RocketStatus> statusAtAssignment;
 
     public Mission(String name) {
         this.name = name;
         this.status = MissionStatus.SCHEDULED;
         this.assignedRockets = new ArrayList<>();
+        this.statusAtAssignment = new ArrayList<>();
     }
 
     public String getName() {
@@ -33,6 +35,8 @@ public class Mission {
         }
 
         assignedRockets.add(rocket);
+        statusAtAssignment.add(rocket.getStatus());
+
         updateStatus();
     }
 
@@ -42,8 +46,8 @@ public class Mission {
             return;
         }
 
-        boolean anyInRepair = assignedRockets.stream()
-                .anyMatch(r -> r.getStatus() == RocketStatus.IN_REPAIR);
+        boolean anyInRepair = statusAtAssignment.stream()
+                .anyMatch(s -> s == RocketStatus.IN_REPAIR);
 
         status = anyInRepair ? MissionStatus.PENDING : MissionStatus.IN_PROGRESS;
     }
