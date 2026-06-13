@@ -15,7 +15,7 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - [x] Domain models (Rocket, Mission, Status enums)
 - [x] Repository logic
 - [x] CI/CD Workflow
-- [ ] Unit tests
+- [x] Unit tests
 - [ ] Summary reporting
 
 ## Assumptions & Design Choices
@@ -24,6 +24,12 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - A rocket can't join a mission if it's already marked `IN_SPACE`.
 - Once a mission hits `ENDED`, it's locked. No more assignments.
 - Everything lives in memory. Restart the app, start fresh.
+
+## Verified Behaviors (via tests)
+- Rejects assigning a rocket that's already tied to a mission.
+- Mission status reacts to the state of its rockets.
+- `ENDED` missions block new assignments.
+- Summary ordering is stable and covered by tests.
 
 ---
 
