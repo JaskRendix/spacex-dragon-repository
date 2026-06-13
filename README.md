@@ -26,9 +26,11 @@ This thing keeps track of rockets, missions, their statuses, and how they move t
 - Everything lives in memory. Restart the app, start fresh.
 
 ## Verified Behaviors (via tests)
-- Rejects assigning a rocket that's already tied to a mission.
-- Mission status reacts to the state of its rockets.
-- `ENDED` missions block new assignments.
+- Rejects assigning a rocket that's already tied to a mission.  
+- Mission status reacts to the state of its rockets (`IN_PROGRESS`, `PENDING`).  
+- `ENDED` missions block new assignments.  
+- Duplicate rocket names are rejected.  
+- Lookups for unknown rockets or missions fail fast.  
 - Summary ordering is stable and covered by tests.
 
 ---
