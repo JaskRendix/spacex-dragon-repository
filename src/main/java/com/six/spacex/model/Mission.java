@@ -38,7 +38,9 @@ public class Mission {
     
         assignedRockets.add(rocket);
     
-        rocket.setStatus(RocketStatus.IN_SPACE);
+        if (rocket.getStatus() == RocketStatus.ON_GROUND) {
+            rocket.setStatus(RocketStatus.IN_SPACE);
+        }
     
         updateStatus();
     }
