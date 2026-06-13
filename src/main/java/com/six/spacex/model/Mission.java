@@ -32,12 +32,7 @@ public class Mission {
             throw new IllegalStateException("Mission already ended");
         }
 
-        if (rocket.getStatus() == RocketStatus.IN_SPACE) {
-            throw new IllegalStateException("Rocket already assigned to a mission");
-        }
-
         assignedRockets.add(rocket);
-
         updateStatus();
     }
 
