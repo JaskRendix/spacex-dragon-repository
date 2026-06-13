@@ -31,14 +31,15 @@ public class Mission {
         if (status == MissionStatus.ENDED) {
             throw new IllegalStateException("Mission already ended");
         }
-
-        if (rocket.getStatus() != RocketStatus.ON_GROUND) {
+    
+        if (rocket.getStatus() == RocketStatus.IN_SPACE) {
             throw new IllegalStateException("Rocket already assigned to a mission");
         }
-
+    
         assignedRockets.add(rocket);
+    
         rocket.setStatus(RocketStatus.IN_SPACE);
-
+    
         updateStatus();
     }
 
