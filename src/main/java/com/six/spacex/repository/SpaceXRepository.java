@@ -8,7 +8,10 @@ public class SpaceXRepository {
     private final Map<String, Mission> missions = new HashMap<>();
 
     public void addRocket(String name) {
-        rockets.putIfAbsent(name, new Rocket(name));
+        if (rockets.containsKey(name)) {
+            throw new IllegalStateException("Rocket already exists: " + name);
+        }
+        rockets.put(name, new Rocket(name));
     }
 
     public void addMission(String name) {
