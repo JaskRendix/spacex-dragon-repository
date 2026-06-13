@@ -33,7 +33,6 @@ public class Mission {
         }
 
         assignedRockets.add(rocket);
-        updateStatus();
     }
 
     private void updateStatus() {
