@@ -49,10 +49,17 @@ public class SpaceXRepository {
         Rocket rocket = getRocket(rocketName);
         Mission mission = getMission(missionName);
 
+        // Check if rocket is in build phase if you're human
+        if (rocket.getStatus() == RocketStatus.IN_BUILD) {
+            throw new IllegalStateException("Rocket " + rocketName + " is still under construction and cannot be assigned.");
+        }
+
+        // Check if already assigned
         if (rocket.getStatus() == RocketStatus.IN_SPACE) {
             throw new IllegalStateException("Rocket " + rocketName + " is already assigned to a mission.");
         }
 
+        // Check mission status
         if (mission.getStatus() == MissionStatus.ENDED) {
             throw new IllegalStateException("Mission " + missionName + " has ended and cannot accept new rockets.");
         }
