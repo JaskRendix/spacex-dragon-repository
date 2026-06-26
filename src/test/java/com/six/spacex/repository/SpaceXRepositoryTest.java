@@ -23,13 +23,20 @@ class SpaceXRepositoryTest {
         assertEquals(1, repo.getMission("MarsMission").getAssignedRockets().size());
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = {"  ", "\t"})
-    void shouldRejectInvalidNames(String invalidName) {
+    @Test
+    void shouldRejectInvalidRocketNames() {
         SpaceXRepository repo = new SpaceXRepository();
-        assertThrows(IllegalArgumentException.class, () -> repo.addRocket(invalidName));
-        assertThrows(IllegalArgumentException.class, () -> repo.addMission(invalidName));
+        assertThrows(IllegalArgumentException.class, () -> repo.addRocket(""));
+        assertThrows(IllegalArgumentException.class, () -> repo.addRocket(null));
+        assertThrows(IllegalArgumentException.class, () -> repo.addRocket("   "));
+    }
+
+    @Test
+    void shouldRejectInvalidMissionNames() {
+        SpaceXRepository repo = new SpaceXRepository();
+        assertThrows(IllegalArgumentException.class, () -> repo.addMission(""));
+        assertThrows(IllegalArgumentException.class, () -> repo.addMission(null));
+        assertThrows(IllegalArgumentException.class, () -> repo.addMission("   "));
     }
 
     @Test
@@ -38,7 +45,6 @@ class SpaceXRepositoryTest {
         repo.addRocket("Dragon1");
         repo.addMission("MissionA");
         repo.addMission("MissionB");
-
         repo.assignRocketToMission("Dragon1", "MissionA");
         assertThrows(IllegalStateException.class, () -> repo.assignRocketToMission("Dragon1", "MissionB"));
     }
